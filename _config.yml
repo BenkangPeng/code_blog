@@ -4,17 +4,17 @@
 
 # Site
 title: Benkang Peng
-subtitle: 
-description: 'BenkangPeng的个人博客'
+subtitle: Personal Website 
+description: 'Stay Hungry,Stay Foolish'
 keywords:
 author: Benkang Peng
-language: zh-CN
+language: en
 timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
-permalink: :year/:month/:day/:title/
+url: http://benkangpeng.github.io/
+permalink: posts/:abbrlink/
 permalink_defaults:
 pretty_urls:
   trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
@@ -29,6 +29,7 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
+ - "me/**"
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -44,7 +45,7 @@ post_asset_folder: false
 relative_link: false
 future: true
 highlight:
-  enable: true
+  enable: true 
   line_number: true
   auto_detect: false
   tab_replace: ''
@@ -102,14 +103,16 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: 'git'
+  repository: https://github.com/benkangpeng/benkangpeng.github.io.git
+  # repository: https://gitee.com/benkangpeng/benkangpeng.git
 
 # hexo-generator-searchdb
 search:
   path: search.xml
   field: post
+  content: true
   format: html
-  limit: 10
 
 
 symbols_count_time:
@@ -132,4 +135,17 @@ feed:
   hub:
   content:
 
-  
+# abbrlink config
+abbrlink:
+  alg: crc32      #support crc16(default) and crc32
+  rep: hex        #support dec(default) and hex
+  drafts: false   #(true)Process draft,(false)Do not process draft. false(default) 
+  # Generate categories from directory-tree
+  # depth: the max_depth of directory-tree you want to generate, should > 0
+  auto_category:
+     enable: true  #true(default)
+     depth:        #3(default)
+     over_write: false 
+  auto_title: false #enable auto title, it can auto fill the title by path
+  auto_date: false #enable auto date, it can auto fill the date by time today
+  force: false #enable force mode,in this mode, the plugin will ignore the cache, and calc the abbrlink for every post even it already had abbrlink. This only updates abbrlink rather than other front variables.
