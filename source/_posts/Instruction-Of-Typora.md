@@ -2,7 +2,7 @@
 title: Instruction Of Typora
 tags: Software
 abbrlink: bfc69175
-date: 2023-10-01 19:00:00
+date: 2021-10-01 19:00:00
 ---
 
 

@@ -2,7 +2,7 @@
 title: HDLBits Solutions
 tags: IC
 abbrlink: 4ff0bc03
-date: 2023-10-01 20:00:00
+date: 2021-10-01 20:00:00
 ---
 
 <h3>Abstract</h3>
@@ -683,7 +683,334 @@ endmodule
 
 ```
 
-不完备 不一致 不可判定
+## Sequential Logic
+
+### Latches and Flip-Flops
+
+#### *DFFs and gates
+
+concise solution :
+
+```verilog
+module top_module (
+    input clk,
+    input x,
+    output z
+); 
+    reg [2:0] Q ;
+    always @(posedge clk) begin
+        Q[0] <= x ^ Q[0] ;
+        Q[1] <= x & ~Q[1] ;
+        Q[2] <= x | ~Q[2] ;
+    end
+    assign z = ~ (|Q) ;
+endmodule
+
+```
+
+my solution
+
+```verilog
+module top_module (
+    input clk,
+    input x,
+    output z
+); 
+    wire [2:0] Q ;
+    DFF_ U0( .clk(clk) , .d(x ^ Q[0]) , .q(Q[0]) ) ;
+    DFF_ U1( .clk(clk) , .d(x & ~Q[1]) , .q(Q[1]) ) ;
+    DFF_ U2( .clk(clk) , .d(x | ~Q[2]) , .q(Q[2]) ) ;
+    assign z = ~ (| Q ) ;
+endmodule
+
+module DFF_(
+    input clk , d ,
+    output reg q
+);
+    always @(posedge clk) begin
+       q <= d ; 
+    end
+endmodule
+```
+
+#### *Detect an edge 
+
+```verilog
+module top_module (
+    input clk,
+    input [7:0] in,
+    output reg [7:0] pedge
+);
+    reg [7:0] last_in ;
+    always @(posedge clk) begin
+       last_in <= in ;
+       pedge <= ~last_in & in ;
+    end
+endmodule
+```
+
+#### *Detect both edges
+
+```verilog
+module top_module (
+    input clk,
+    input [7:0] in,
+    output [7:0] anyedge
+);
+    reg [7:0] last_in ;
+    always @(posedge clk) begin
+       last_in <= in ;
+       anyedge <= last_in ^ in ;
+    end
+    
+endmodule
+```
+
+#### *Edge capture register
+
+==Tips== : After clk's change from 1 to 0 , register q = 1 . And then , q is still `1`  until `reset = 1` ; 
+
+```verilog
+module top_module (
+    input clk,
+    input reset,
+    input [31:0] in,
+    output reg [31:0] out
+);
+    integer i ;
+    reg [31:0] last_in ;
+    always @(posedge clk) begin
+       last_in <= in ;
+        if(reset) out <= 0 ;
+        else begin
+            for(i = 0 ; i < 32 ; i++)
+                out[i] <= last_in[i] & ~in[i] ? 1 : out[i] ;
+        end
+    end
+endmodule
+```
+
+==My error solution==
+
+```verilog
+module top_module (
+    input clk,
+    input reset,
+    input [31:0] in,
+    output reg [31:0] out
+);
+    integer i ;
+    reg [31:0] last_in ;
+    always @(posedge clk) begin
+       last_in <= in ;
+        if(reset) out <= 0 ;
+        else begin
+            ////////////////////////
+            out <= last_in & ~in ;
+            ///////////////////////
+        end
+    end
+endmodule
+```
+
+#### *Dual-edge triggered filp-flop
+
+```verilog
+module top_module (
+    input clk,
+    input d,
+    output q
+);
+    reg q0 , q1 ;
+    always @(posedge clk) begin
+       q0 <= d ; 
+    end
+    always @(negedge clk) begin
+       q1 <= d ;
+    end
+    assign q = clk ? q0 : q1 ;
+endmodule
+```
+
+### 
+
+### Counters
+
+#### *Counter 1-12
+
+```verilog
+module top_module (
+    input clk,
+    input reset,
+    input enable,
+    output [3:0] Q,
+    output c_enable,
+    output c_load,
+    output [3:0] c_d
+); //
+
+    count4 the_counter (clk, c_enable, c_load, c_d , Q);
+    assign c_enable = enable ;
+    assign c_load = (Q == 12 && enable) || reset ? 1 : 0 ;
+    assign c_d = 4'b0001 ;
+
+endmodule
+```
+
+**Count4.v **
+
+```verilog
+module count4(
+    input clk , 
+    input enable ,
+    input load ,
+    input [3:0] d ,
+    output reg [3:0] Q
+);
+    always @(posedge clk) begin
+        if(load)    Q <= d ;
+        else if(enable) Q <= Q + 1 ;
+    end
+endmodule
+```
+
+#### Counter 1000
+
+```verilog
+//make sure OneHertz turn into 1 once time every 1000 clk.即分频器，1000Hz转1Hz
+module top_module (
+    input clk,
+    input reset,
+    output OneHertz,
+    output [2:0] c_enable
+); //
+    wire [11:0] Q ;
+    assign {OneHertz , c_enable} = { (Q[11:0] == 12'h999) , (Q[7:0] == 8'h99) ,(Q[3:0] == 4'h9) , 1'b1 } ; 
+    bcdcount counter0 (clk, reset, c_enable[0] , Q[3:0]);
+    bcdcount counter1 (clk, reset, c_enable[1] , Q[7:4]);
+    bcdcount counter2 (clk, reset, c_enable[2] , Q[11:8]);
+endmodule
+
+```
+
+#### 4-digit decimal counter
+
+```verilog
+module top_module (
+    input clk,
+    input reset,   // Synchronous active-high reset
+    output [3:1] ena,
+    output reg [15:0] q);
+	
+    assign ena = {  (q[11:0] == 12'h999) , (q[7:0] == 8'h99) , (q[3:0] == 4'h9) } ;
+    always @(posedge clk) begin
+        if(reset) q <= 0 ;
+        else begin
+            q[3:0] <= (q[3:0] == 4'h9) ? 0 : (q[3:0] + 1) ;
+            if(ena[1])	q[7:4] <= (q[7:4] == 4'h9) ? 0 : (q[7:4] + 1 ) ;
+            if(ena[2])	q[11:8] <= (q[11:8] == 4'h9) ? 0 : (q[11:8] + 1 ) ;
+            if(ena[3])	q[15:12] <= (q[15:12] == 4'h9) ? 0 : (q[15:12] + 1 ) ;
+        end
+    end
+    
+endmodule 
+```
+
+```verilog
+//another solution , Init module
+module top_module (
+    input clk,
+    input reset,   // Synchronous active-high reset
+    output [3:1] ena,
+    output reg [15:0] q);
+
+wire en0 ;
+    assign {ena , en0} = { q[11:0] == 12'h999 , q[7:0] == 8'h99 , q[3:0] == 4'h9, 1'b1} ;
+    counter10 U0(clk , reset , en0    , q[3:0]) ;
+    counter10 U1(clk , reset , ena[1] , q[7:4]) ;
+    counter10 U2(clk , reset , ena[2] , q[11:8]) ;
+    counter10 U3(clk , reset , ena[3] , q[15:12]) ;
+endmodule
+
+module counter10(
+    input clk ,
+    input reset,
+    input ena ,
+    output [3:0] out 
+);
+    //assign reset = (out == 9) ;
+    always@(posedge clk) begin
+        if(reset)	out <= 0 ;
+        else if(ena) out <= (out == 9) ? 0 : out + 1 ;
+    end
+endmodule
+```
+
+#### 12-hour clock
+
+```verilog
+module top_module(
+    input clk ,
+    input reset ,
+    input ena ,
+    output reg pm ,
+    output reg [7:0] hh,
+    output reg [7:0] mm,
+    output reg [7:0] ss
+);
+    wire [1:0] carry ;
+    counter60 ss0(clk , reset , ena , carry[0] , ss[7:0]) ;
+    counter60 mm0(clk , reset , carry[0] , carry[1] , mm[7:0]) ;
+    counter12 hh0(clk , reset , carry[1] && carry[0] , pm       , hh[7:0]) ;
+    
+endmodule
+
+module counter60(
+    input clk ,
+    input reset ,
+    input en ,
+    output carry ,//carry = 1 when Q = 8'h59 , which means carry out .
+    output reg [7:0] Q
+);
+    assign carry = (Q == 8'h59) ;
+    always @(posedge clk)   begin
+        if(reset)   Q <= 0 ;
+        else if(en) begin
+            Q[3:0] <= (Q[3:0] == 4'h9) ? 0 : Q[3:0] + 1 ;
+            if(Q[3:0] == 4'h9)  Q[7:4] <= (Q[7:4] == 4'h5) ? 0 : Q[7:4] + 1 ;
+        end
+    end
+endmodule
+
+module counter12(
+    input clk ,
+    input reset ,
+    input en ,
+    output reg pm ,
+    output reg [7:0] Q  
+);
+    always @(posedge clk)   begin
+        if(reset)   Q <= 8'b0001_0010 ;
+        else if(en) begin
+            case(Q[3:0]) 
+                4'b1001 : Q[7:0] <= 8'b0001_0000 ;
+                4'b0010 : begin
+                    if(Q[7:4] == 4'h1)  Q <= 8'h01 ;
+                    else    Q[3:0] <= Q[3:0] + 1 ;
+                end
+                default : Q[3:0] <= Q[3:0] + 1 ;
+            endcase
+        end
+    end
+
+    always @(posedge clk)   begin
+        if(reset)   pm <= 0 ;
+        else if(en && Q[7:0] == 8'h11)  pm <= ~pm ;
+        else pm <= pm ;
+    end
+
+endmodule
+```
 
 
 
@@ -691,11 +1018,15 @@ endmodule
 
 
 
+## Some worthwhile retry practice ;
 
-
-
-
-
-
-
-
+* [Detect an edge](https://hdlbits.01xz.net/wiki/edgedetect)
+* [Detect both edges](https://hdlbits.01xz.net/wiki/edgedetect2)
+* [Edge capture register](https://hdlbits.01xz.net/wiki/edgecapture)
+* [Dual-edge triggered flip-flop](https://hdlbits.01xz.net/wiki/dualedge)
+* [Slow decade counter](https://hdlbits.01xz.net/wiki/Countslow)
+* [Counter 1-12](https://hdlbits.01xz.net/wiki/Exams/ece241_2014_q7a)
+* [Counter 1000](https://hdlbits.01xz.net/wiki/Exams/ece241_2014_q7b)
+* [4-digit decimal counter](https://hdlbits.01xz.net/wiki/Countbcd)
+* [12-hour clock](https://hdlbits.01xz.net/wiki/Count_clock)
+* [3-input LUT](https://hdlbits.01xz.net/wiki/Exams/ece241_2013_q12)
