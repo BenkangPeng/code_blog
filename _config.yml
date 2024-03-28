@@ -150,8 +150,5 @@ abbrlink:
   auto_date: false #enable auto date, it can auto fill the date by time today
   force: false #enable force mode,in this mode, the plugin will ignore the cache, and calc the abbrlink for every post even it already had abbrlink. This only updates abbrlink rather than other front variables.
 
-#add by pbk in 2024.03.28
-post_meta:
-  item_text: true
-  created_at: true
-  updated_at: true
+
+

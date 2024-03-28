@@ -98,7 +98,7 @@ open_graph:
 menu:
   home: / || fa fa-home
   tags: /tags/ || fa fa-tags
-  archives: /archives/ || fa fa-archive
+  # archives: /archives/ || fa fa-archive
   External-link: /external-link/ || fa fa-external-link
   about: /about/ || fa fa-user
   Me: /me/index.html || fa fa-code
@@ -221,7 +221,7 @@ footer:
   copyright:
 
   # Powered by Hexo & NexT
-  powered: true
+  powered: false
 
   # Beian ICP and gongan information for Chinese users. See: https://beian.miit.gov.cn, http://www.beian.gov.cn
   beian:

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.20/fancybox/fancybox.css" integrity="sha256-RvRHGSuWAxZpXKV9lLDt2e+rZ+btzn48Wp4ueS3NZKs=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"benkangpeng.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac","show_result":true},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"rgb(240,55,82)","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="摘要我们在使用Hexo+NexT搭建好个人博客后,只能在本地端口访问，其他人无法访问(有一种内网穿透的方法可以将电脑端口暴露，从而达到”上线“的功能。尚未了解    找到了:Here)。 我们可以使用Github pages 和Gitee pages 上线网站从而白嫖一台只能搭载静态网页的服务器  （是不是有种白嫖的快乐）以下是上线步骤。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deploy your website">
+<meta property="og:url" content="http://benkangpeng.github.io/posts/f1f00c7b/index.html">
+<meta property="og:site_name" content="Benkang Peng">
+<meta property="og:description" content="摘要我们在使用Hexo+NexT搭建好个人博客后,只能在本地端口访问，其他人无法访问(有一种内网穿透的方法可以将电脑端口暴露，从而达到”上线“的功能。尚未了解    找到了:Here)。 我们可以使用Github pages 和Gitee pages 上线网站从而白嫖一台只能搭载静态网页的服务器  （是不是有种白嫖的快乐）以下是上线步骤。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-01T08:00:00.000Z">
+<meta property="article:modified_time" content="2024-03-15T12:38:50.526Z">
+<meta property="article:author" content="Benkang Peng">
+<meta property="article:tag" content="Web">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://benkangpeng.github.io/posts/f1f00c7b/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://benkangpeng.github.io/posts/f1f00c7b/","path":"posts/f1f00c7b/","title":"Deploy your website"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Deploy your website | Benkang Peng</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Benkang Peng" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Benkang Peng</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Personal Website</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-external-link"><a href="/external-link/" rel="section"><i class="fa fa-external-link fa-fw"></i>External-link</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-me"><a href="/me/index.html" rel="section"><i class="fa fa-code fa-fw"></i>Me</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Github-pages"><span class="nav-number">2.</span> <span class="nav-text">Github pages</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.1.</span> <span class="nav-text">主要步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gitee-pages"><span class="nav-number">3.</span> <span class="nav-text">Gitee pages</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E6%AD%A5%E9%AA%A4-1"><span class="nav-number">3.1.</span> <span class="nav-text">主要步骤:</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Benkang Peng"
+      src="/images/GNU-Linux-Logo-Penguin-SVG.webp">
+  <p class="site-author-name" itemprop="name">Benkang Peng</p>
+  <div class="site-description" itemprop="description">Stay Hungry,Stay Foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/benkangpeng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;benkangpeng" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:benkangpeng@163.com" title="E-Mail → mailto:benkangpeng@163.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://benkangpeng.github.io/posts/f1f00c7b/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/GNU-Linux-Logo-Penguin-SVG.webp">
+      <meta itemprop="name" content="Benkang Peng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Benkang Peng">
+      <meta itemprop="description" content="Stay Hungry,Stay Foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Deploy your website | Benkang Peng">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Deploy your website
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>5 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>我们在使用<a target="_blank" rel="noopener" href="https://benkangpeng.gitee.io/2023/09/18/Hello%20Hexo-NEXT/">Hexo+NexT搭建</a>好个人博客后,只能在本地端口访问，其他人无法访问(有一种内网穿透的方法可以将电脑端口暴露，从而达到”上线“的功能。尚未了解    找到了:<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1z14y1r7Fc/?spm_id_from=333.999.0.0&vd_source=da5120fea3f8bb8d2fe1984a02a9a745">Here</a>)。</p>
+<p>我们可以使用<code>Github pages</code> 和<code>Gitee pages</code> 上线网站从而白嫖一台只能搭载<code>静态网页</code>的服务器  （<del>是不是有种白嫖的快乐</del>）以下是上线步骤。</p>
+<span id="more"></span>
+
+<h3 id="Github-pages"><a href="#Github-pages" class="headerlink" title="Github pages"></a>Github pages</h3><h4 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h4><ul>
+<li><p><strong>注册GitHub、新建仓库</strong></p>
+<p>新建一个仓库，注意仓库名一定是用户名与github.io的组合，例如<code>benkangpeng.github.io</code></p>
+</li>
+<li><p><strong>生成ssh-key</strong></p>
+<p>如果未配置过git ，未获得<code>ssh key</code> 的话，需要配置<code>git</code>并获得<code>ssh key</code>(我理解为电脑硬件、邮箱对应的编码。通过该编码可以找到唯一的计算机，<code>GitHub</code>就是通过<code>ssh key</code>与计算机进行加密数据传输的。计算机网络没学 ，一定得补补:cry:)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;benkangpeng&quot;</span><br><span class="line">git config --global user.email &quot;benkangpeng@163.com&quot;</span><br><span class="line">ssh-keygen -t rsa -C &quot;benkangpeng@163.com&quot;  # 之后三次回车</span><br></pre></td></tr></table></figure>
+
+<p>根据终端输出的信息找到<code>id_rsa.pub</code>的位置,或者通过以下命令查看：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Connect computer with GitHub by ssh-key</strong></p>
+<p><strong>将ssh-key加入到github上</strong>：点击<code>个人头像进入个人空间</code> → <code>SSH and GPG keys</code>→ <code>New SSH key </code>,Title随意(最好标明是哪台电脑），<code>Key</code>粘上刚才复制的<code>id_rsa.pub</code> ，添加成功后会收到Github的邮件。</p>
+<p><strong>尝试本机与Github通信</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Hi BenkangPeng! You’ve successfully authenticated, but GitHub does not provide shell access.</p>
+</blockquote>
+<p>若显示以上结果，则表明通信成功。</p>
+</li>
+<li><p>修改<code>Hexo</code> 配置文件</p>
+<p><code>_config.yml </code>文件中找到<code>deploy</code>一项，修改为</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">&#x27;git&#x27;</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">https://github.com/benkangpeng/benkangpeng.github.io.git</span></span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>type</code>表示<code>the type of site deploying</code> , 即网站发布的方式，我们通过<code>git</code>发布</p>
+<p><code>repository</code>则填写之前建立的仓库的地址，后加上后缀<code>.git</code></p>
+</li>
+<li><p>安装<code>hexo部署插件</code>(最好在根目录安装插件)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">benkangpeng@DESKTOP-FR84659 MINGW64 /d/Hexo/blog (master)</span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将文件上传到<code>Github</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g  # hexo generate</span><br><span class="line">hexo d  # hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>此时相关文件已上传到对应的仓库中，但如果此时你输入<code>https:\\benkangpeng.github.io</code>结果是<code>404</code>，原因是未将该仓库设置为<code>GitHub pages</code> .</p>
+<p>在仓库页面右边的侧边栏中有一个<code>设置</code>的齿轮图标，点击→勾选<code>Use your GitHub Pages website</code>→<code>Save Changes</code></p>
+</li>
+<li><p><strong>大功告成</strong>，输入<code>https:\\benkangpeng.github.io</code>查看网页吧！</p>
+</li>
+</ul>
+<h3 id="Gitee-pages"><a href="#Gitee-pages" class="headerlink" title="Gitee pages"></a>Gitee pages</h3><p>因为Gitee pages的部署与Github类似(<del>毕竟抄来的</del>)，以下步骤较为简略，可参考着Github的配置步骤进行。</p>
+<h4 id="主要步骤-1"><a href="#主要步骤-1" class="headerlink" title="主要步骤:"></a>主要步骤:</h4><ul>
+<li><p><strong>Gitee注册账号</strong>并实名认证(对，就是这么狗:dog:)</p>
+</li>
+<li><p><strong>新建仓库</strong></p>
+<p>此处一定要注意仓库名与用户名一致，例如我的是<code>benkangpeng</code>,与Github不同(GitHub是benkangpeng.github.io)</p>
+</li>
+<li><p><strong>Git全局设置、获取ssh-key</strong>(同上面的Github)</p>
+<p>已经设置过全局设置、获取过ssh-key，则无需进行操作。重复操作会改变计算机的ssh-key，与之前在Github绑定的ssh-key不同了，导致Github与计算机无法通信。最优解：固定计算机的ssh-key不变，Github、Gitee共用一个。此后也不要变更ssh-key.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;benkangpeng&quot;</span><br><span class="line">git config --global user.email &quot;benkangpeng@163.com&quot;</span><br><span class="line">ssh-keygen -t rsa -C &quot;benkangpeng@163.com&quot;  # 之后三次回车</span><br></pre></td></tr></table></figure>
+
+<p>根据终端输出的信息找到<code>id_rsa.pub</code>的位置,或者通过以下命令查看：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>SSH-key填入Gitee</strong></p>
+<p>点头像→设置→SSH公钥</p>
+</li>
+<li><p><strong>第一次通信</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@gitee.com</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Hi BenkangPeng(@benkangpeng)! You’ve successfully authenticated, but GITEE.COM does not provide shell access.</p>
+</blockquote>
+<p><del>咱也不懂<code>does not provide shell access</code>是啥意思，Gitee垃圾就完事了</del></p>
+</li>
+<li><p><strong>修改<code>hexo</code>  <code>_config.yml</code></strong></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">&#x27;git&#x27;</span></span><br><span class="line">  <span class="comment">#repository: https://github.com/benkangpeng/benkangpeng.github.io.git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">https://gitee.com/benkangpeng/benkangpeng.git</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>安装hexo部署插件</strong>(安装过的无需重复安装)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>部署、上传到Gitee</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>此时可以看到相关文件已上传到Gitee仓库中。</p>
+</li>
+<li><p><strong>将仓库设置为Gitee Pages</strong></p>
+<p>①进入仓库→上面的边框 <code>管理</code>→向下滑，勾选<code>开源</code>→<code>保存</code></p>
+<p>②进入仓库→上面的边框 <code>服务</code>→<code>Gitee Pages</code> → 勾选<code>强制使用HTTPS</code>→<code>启动</code></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Web/" rel="tag"><i class="fa fa-tag"></i> Web</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/b3bdf13b/" rel="prev" title="Hello Hexo-NexT">
+                  <i class="fa fa-angle-left"></i> Hello Hexo-NexT
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/4bc5178d/" rel="next" title="Customized Website Article Link">
+                  Customized Website Article Link <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Benkang Peng</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">98k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">2:59</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">Loading days...</span>
+<span id="times">Loading hours,minutes and seconds...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("10/01/2021 15:00:00"); //此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "The website has been securely running for  "+dnum+"  days ";
+        document.getElementById("times").innerHTML = hnum + " hours " + mnum + " minutes and " + snum + " seconds.";
+    }
+setInterval("createtime()",250);
+
+</script>
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/benkangpeng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.20/fancybox/fancybox.umd.js" integrity="sha256-q8XkJ6dj5VwSvzI8+nATCHHQG+Xv/dAZBCgqmu93zOY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"Me":true,"url":"http://benkangpeng.github.io/posts/f1f00c7b/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

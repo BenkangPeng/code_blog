@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.20/fancybox/fancybox.css" integrity="sha256-RvRHGSuWAxZpXKV9lLDt2e+rZ+btzn48Wp4ueS3NZKs=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"benkangpeng.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac","show_result":true},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"rgb(240,55,82)","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="最近又重学了一遍链表，记得大一学链表时也是很迷，指来指去没指明白哈哈哈。这一次学也是通透多了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重学链表">
+<meta property="og:url" content="http://benkangpeng.github.io/posts/14fa845f/index.html">
+<meta property="og:site_name" content="Benkang Peng">
+<meta property="og:description" content="最近又重学了一遍链表，记得大一学链表时也是很迷，指来指去没指明白哈哈哈。这一次学也是通透多了。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.imgdb.cn/item/6537eb1ec458853aefe7a841.jpg">
+<meta property="article:published_time" content="2021-10-24T07:45:08.000Z">
+<meta property="article:modified_time" content="2024-03-15T12:40:22.424Z">
+<meta property="article:author" content="Benkang Peng">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.imgdb.cn/item/6537eb1ec458853aefe7a841.jpg">
+
+
+<link rel="canonical" href="http://benkangpeng.github.io/posts/14fa845f/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://benkangpeng.github.io/posts/14fa845f/","path":"posts/14fa845f/","title":"重学链表"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>重学链表 | Benkang Peng</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Benkang Peng" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Benkang Peng</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Personal Website</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-external-link"><a href="/external-link/" rel="section"><i class="fa fa-external-link fa-fw"></i>External-link</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-me"><a href="/me/index.html" rel="section"><i class="fa fa-code fa-fw"></i>Me</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E9%93%BE%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">单链表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E4%B8%80%E4%B8%AA%E9%93%BE%E8%A1%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">声明一个链表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E6%93%8D%E4%BD%9C"><span class="nav-number">1.2.</span> <span class="nav-text">常用函数操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8"><span class="nav-number">2.</span> <span class="nav-text">双向链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81bugs"><span class="nav-number">3.</span> <span class="nav-text">常见bugs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#y%E6%80%BB%E7%9A%84%E9%93%BE%E8%A1%A8%E7%AE%97%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">y总的链表算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">一些练习题</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Benkang Peng"
+      src="/images/GNU-Linux-Logo-Penguin-SVG.webp">
+  <p class="site-author-name" itemprop="name">Benkang Peng</p>
+  <div class="site-description" itemprop="description">Stay Hungry,Stay Foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/benkangpeng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;benkangpeng" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:benkangpeng@163.com" title="E-Mail → mailto:benkangpeng@163.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://benkangpeng.github.io/posts/14fa845f/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/GNU-Linux-Logo-Penguin-SVG.webp">
+      <meta itemprop="name" content="Benkang Peng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Benkang Peng">
+      <meta itemprop="description" content="Stay Hungry,Stay Foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="重学链表 | Benkang Peng">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          重学链表
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>7.1k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>13 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>最近又重学了一遍链表，记得大一学链表时也是很迷，指来指去没指明白哈哈哈。这一次学也是通透多了。</p>
+<span id="more"></span>
+
+<h2 id="单链表"><a href="#单链表" class="headerlink" title="单链表"></a>单链表</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">Lnode</span>&#123;</span><br><span class="line">    <span class="type">int</span> data ;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">Lnode</span> *next ;</span><br><span class="line">&#125;Lnode , *Linklist ;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>结构体内两个元素<code>data</code> 、<code>next</code></li>
+<li><code>data</code>是<code>int</code>型，可修改为其他，例如<code>char</code>、<code>double</code></li>
+<li><code>next</code>是类型为<code>struct Lnode</code>的指针，可指向<code>struct Lnode</code>这种结构体，在链表中<code>next</code>指向下一个结点，例如<code>1号结点的next</code> &#x3D; <code>2号结点的地址</code></li>
+<li><code>Lnode</code>是<code>struct Lnode</code>的别名 ， <code>Linklist</code> 是<code>struct Lnode *</code>的别名</li>
+</ul>
+<h4 id="声明一个链表"><a href="#声明一个链表" class="headerlink" title="声明一个链表"></a>声明一个链表</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Linklist HEAD = <span class="keyword">new</span> Lnode ;</span><br><span class="line">HEAD-&gt;next = <span class="literal">NULL</span> ;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Linklist HEAD</code>与<code>Lnode *HEAD</code>等价，但我们一般用<code>Linklist HEAD</code>来定义链表(定义链表头结点，链表头结点即代表该链表)。用<code>Lnode *p</code>定义一个结点</li>
+<li><code>Linklist HEAD = new Lnode ;</code>为头结点(头指针)分配一个大小为<code>Lnode</code>的空间。</li>
+<li>目前链表为空，头指针指向<code>NULL</code>.<code>HEAD-&gt;next</code>表示<code>HEAD</code>下一个结点地址。</li>
+<li>头指针<code>HEAD</code>不能严格算一个结点,<code>HEAD-&gt;data</code>未定义。</li>
+</ul>
+<p><strong>加入结点</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Lnode *p = <span class="keyword">new</span> Lnode ;<span class="comment">//第一个结点p</span></span><br><span class="line">cin &gt;&gt; p-&gt;data ; <span class="comment">//输入该结点存储的数据data</span></span><br><span class="line">HEAD-&gt;next = p ;</span><br><span class="line">p-&gt;next = <span class="literal">NULL</span> ;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>再加一个结点</strong></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Lnode *q = <span class="keyword">new</span> Lnode ;<span class="comment">//第二个结点q</span></span><br><span class="line">cin &gt;&gt; q-&gt;data ;</span><br><span class="line">p-&gt;next = q ;</span><br><span class="line">q-&gt;next = <span class="literal">NULL</span> ;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意最后一个结点的<code>next</code>应该指向<code>NULL</code>，否则<code>q-&gt;next</code>这个野指针无穷无尽。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std ;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">100010</span> ;</span><br><span class="line"><span class="type">int</span> e[N] , ne[N] , idx , head ;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">    head = <span class="number">-1</span> ;</span><br><span class="line">    idx = <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add_to_head</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">    e[idx] = x ;</span><br><span class="line">    ne[idx] = head ;</span><br><span class="line">    head = idx ;</span><br><span class="line">    idx++ ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> k , <span class="type">int</span> x )</span></span>&#123;</span><br><span class="line">    e[idx] = x ;</span><br><span class="line">    ne[idx] = ne[k] ;</span><br><span class="line">    ne[k] = idx ;</span><br><span class="line">    idx++ ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">remove</span><span class="params">(<span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">    ne[k] = ne[ne[k]] ;   </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">print_list</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = head ; i != <span class="number">-1</span> ; i = ne[i]) cout &lt;&lt; e[i] &lt;&lt; <span class="string">&#x27; &#x27;</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> M , k , x ;</span><br><span class="line">    <span class="type">char</span> operation ;</span><br><span class="line">    <span class="built_in">init</span>() ;</span><br><span class="line">    cin &gt;&gt; M ;</span><br><span class="line">    <span class="keyword">while</span>(M--)&#123;</span><br><span class="line">        cin &gt;&gt; operation ;</span><br><span class="line">        <span class="keyword">switch</span>(operation)&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;H&#x27;</span> :</span><br><span class="line">                cin &gt;&gt; x ;</span><br><span class="line">                <span class="built_in">add_to_head</span>(x) ;</span><br><span class="line">                <span class="keyword">break</span> ;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;D&#x27;</span> :</span><br><span class="line">                cin &gt;&gt; k ;</span><br><span class="line">                <span class="keyword">if</span>(!k)  head = ne[head] ;</span><br><span class="line">                <span class="keyword">else</span> <span class="built_in">remove</span>(k<span class="number">-1</span>) ;</span><br><span class="line">                <span class="keyword">break</span> ;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&#x27;I&#x27;</span> :</span><br><span class="line">                cin &gt;&gt; k &gt;&gt; x ;</span><br><span class="line">                <span class="built_in">add</span>(k<span class="number">-1</span> , x) ;</span><br><span class="line">                <span class="keyword">break</span> ;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span> ;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">print_list</span>() ;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="https://pic.imgdb.cn/item/6537eb1ec458853aefe7a841.jpg" alt="链表示意图.jpg">
+
+<h3 id="常用函数操作"><a href="#常用函数操作" class="headerlink" title="常用函数操作"></a>常用函数操作</h3><ul>
+<li>初始化链表(初始化头指针)</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">InitList</span><span class="params">(Linklist &amp;HEAD)</span></span>&#123;</span><br><span class="line">    <span class="comment">//调用InitList前得先声明HEAD，例如 Linklist linkedlist_1 ，linkedlist_1即是该链表的名称(用头指针来代表链表名称，类似于用地址a来代表数组)</span></span><br><span class="line">    HEAD = <span class="keyword">new</span> Lnode ; <span class="comment">//为HEAD声明一块Lnode大小的空间</span></span><br><span class="line">    HEAD-&gt;next = <span class="literal">NULL</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>判断链表是否为空</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">IsEmpty</span><span class="params">(Linklist &amp;HEAD)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(HEAD-&gt;next) <span class="keyword">return</span> <span class="number">0</span> ;<span class="comment">//非空</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> ; <span class="comment">//为空</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>销毁链表</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">DestroyList</span><span class="params">(Linklist &amp;HEAD)</span></span>&#123;</span><br><span class="line">    Lnode *p ;</span><br><span class="line">    <span class="keyword">while</span>(HEAD)&#123;</span><br><span class="line">        p = HEAD ;</span><br><span class="line">        HEAD = HEAD-&gt;next  ;</span><br><span class="line">        <span class="keyword">delete</span> p ;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>清空链表</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">ClearList</span><span class="params">(Linklist &amp;HEAD)</span></span>&#123;</span><br><span class="line">    Lnode *p , *q ;</span><br><span class="line">    p = HEAD -&gt;next ;</span><br><span class="line">    HEAD-&gt;next = <span class="literal">NULL</span> ;</span><br><span class="line">    <span class="keyword">while</span>(p)&#123;</span><br><span class="line">        q = p-&gt;next ;</span><br><span class="line">        <span class="keyword">delete</span> p ;</span><br><span class="line">        p = q ;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>tips:清空链表不释放头指针空间</p>
+<ul>
+<li>获取链表长度</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">GetLength</span><span class="params">(Linklist &amp;HEAD)</span></span>&#123;</span><br><span class="line">    Lnode *p = HEAD-&gt;next ;</span><br><span class="line">    <span class="type">int</span> length = <span class="number">0</span> ;</span><br><span class="line">    <span class="keyword">while</span>(p)&#123;</span><br><span class="line">        length++ ;</span><br><span class="line">        p = p-&gt;next ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> length ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>根据索引获取链表元素</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">GetElem</span><span class="params">(Linklist &amp;HEAD , <span class="type">int</span> i)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(i &lt; <span class="number">0</span> || i &gt;= <span class="built_in">GetLength</span>(HEAD))   &#123;cout &lt;&lt; <span class="string">&quot;the index is invalid&quot;</span> &lt;&lt; endl ; <span class="keyword">return</span> <span class="number">0</span> ;&#125;</span><br><span class="line">    Lnode *p = HEAD-&gt;next ;</span><br><span class="line">    <span class="type">int</span> j = <span class="number">0</span> ;</span><br><span class="line">    <span class="keyword">while</span>(j != i)&#123;</span><br><span class="line">        j++ ;</span><br><span class="line">        p = p-&gt;next ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> p-&gt;data ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>根据值确定结点索引</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">LocateElem</span><span class="params">(Linklist &amp;HEAD , <span class="type">int</span> value)</span></span>&#123;</span><br><span class="line">    Lnode *p = HEAD-&gt;next ;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span> ;</span><br><span class="line">    <span class="keyword">while</span>(p)&#123;</span><br><span class="line">        <span class="keyword">if</span>(value == p-&gt;data)    <span class="keyword">return</span> i ;</span><br><span class="line">        p = p-&gt;next ;</span><br><span class="line">        i++ ;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; value &lt;&lt; <span class="string">&quot;not in this linkedlist&quot;</span> &lt;&lt; endl ;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>插入结点</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">ListInsert</span><span class="params">(Linklist &amp;HEAD , <span class="type">int</span> i , <span class="type">int</span> data)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(i &lt; <span class="number">0</span> || i &gt; <span class="built_in">GetLength</span>(HEAD))    &#123;cout &lt;&lt; <span class="string">&quot;the index is invalid&quot;</span> &lt;&lt; endl ; <span class="built_in">exit</span>(<span class="number">0</span>) ;&#125;</span><br><span class="line">    Lnode *p = HEAD ;</span><br><span class="line">    <span class="type">int</span> j = <span class="number">-1</span> ;</span><br><span class="line">    <span class="keyword">while</span>(p &amp;&amp; (j!=i<span class="number">-1</span>))&#123;</span><br><span class="line">        p = p-&gt;next ;</span><br><span class="line">        j++ ;</span><br><span class="line">    &#125;</span><br><span class="line">    Lnode *s = <span class="keyword">new</span> Lnode ;</span><br><span class="line">    s-&gt;data = data ;</span><br><span class="line">    s-&gt;next = HEAD-&gt;next ;</span><br><span class="line">    HEAD-&gt;next = s ;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Insert &quot;</span> &lt;&lt; data &lt;&lt; <span class="string">&quot; in the index &quot;</span> &lt;&lt; <span class="string">&#x27;[&#x27;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;] successfully !&quot;</span> &lt;&lt; endl ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>tips: 此处<code>p = HEAD</code>从<code>HEAD</code>开始，<code>j=-1</code> <code>j</code>从<code>-1</code>开始，是为了<code>i=0</code>的特殊情况。</p>
+<ul>
+<li>删除元素</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">DeleteElem</span><span class="params">(Linklist &amp;L , <span class="type">int</span> i)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(i &lt; <span class="number">0</span> || i &gt;= <span class="built_in">GetLength</span>(L))  &#123;cout &lt;&lt; <span class="string">&quot;the index i is invalid&quot;</span> &lt;&lt; endl ; <span class="built_in">exit</span>(<span class="number">0</span>) ;&#125;</span><br><span class="line">    Lnode *p = L ;</span><br><span class="line">    <span class="type">int</span> j = <span class="number">-1</span> ;</span><br><span class="line">    <span class="keyword">while</span>(p &amp;&amp; (j!=i<span class="number">-1</span>))&#123;</span><br><span class="line">        p = p-&gt;next ;</span><br><span class="line">        j++ ;</span><br><span class="line">    &#125;</span><br><span class="line">    Lnode *s = p-&gt;next ;</span><br><span class="line">    p-&gt;next = s-&gt;next ;</span><br><span class="line">    <span class="keyword">delete</span> s ;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>打印链表所有元素</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">PrintList</span><span class="params">(Linklist &amp;L)</span></span>&#123;</span><br><span class="line">    Lnode *p = L-&gt;next ;</span><br><span class="line">    <span class="keyword">while</span>(p)&#123;</span><br><span class="line">        cout &lt;&lt; p-&gt;data &lt;&lt; <span class="string">&quot;  &quot;</span> ;</span><br><span class="line">        p = p-&gt;next ;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; endl ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>头插法创建链表</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">CreateList_H</span><span class="params">(Linklist &amp;L , <span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="comment">//insert the nodes from the head of linkedlist</span></span><br><span class="line">    L = <span class="keyword">new</span> Lnode ;</span><br><span class="line">    L-&gt;next = <span class="literal">NULL</span> ;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = n - <span class="number">1</span> ; i &gt;= <span class="number">0</span> ; i--)&#123;</span><br><span class="line">        Lnode *p = <span class="keyword">new</span> Lnode ;</span><br><span class="line">        cin &gt;&gt; p-&gt;data ;</span><br><span class="line">        p-&gt;next = L-&gt;next ;</span><br><span class="line">        L-&gt;next = p ;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>尾插法创建链表</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">CreateList_T</span><span class="params">(Linklist &amp;L , <span class="type">int</span> n )</span></span>&#123;</span><br><span class="line">    <span class="comment">//Insert elements from the tail of linkedlist</span></span><br><span class="line">    L = <span class="keyword">new</span> Lnode ;</span><br><span class="line">    L-&gt;next = <span class="literal">NULL</span> ;</span><br><span class="line">    Lnode *T = L ;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span> ; i &lt; n ; i++)&#123;</span><br><span class="line">        Lnode *p = <span class="keyword">new</span> Lnode ;</span><br><span class="line">        cin &gt;&gt; p-&gt;data ;</span><br><span class="line">        T-&gt;next = p ;</span><br><span class="line">        T = T-&gt;next ;</span><br><span class="line">        p-&gt;next = <span class="literal">NULL</span> ;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std ;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">DoubleLinkedList</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> data ;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">DoubleLinkedList</span> *prior , *next ;</span><br><span class="line">&#125;DLNode , *DLList;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">InitDLList</span> <span class="params">(DLList &amp;HEAD)</span></span>&#123;</span><br><span class="line">    HEAD = <span class="keyword">new</span> DLNode ;</span><br><span class="line">    HEAD-&gt;next = <span class="literal">NULL</span> ;</span><br><span class="line">    HEAD-&gt;prior = <span class="literal">NULL</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">CreateList_DL</span><span class="params">(DLList &amp;HEAD , <span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span> ; i &lt; n ; i++)&#123;</span><br><span class="line">        DLNode *p = <span class="keyword">new</span> DLNode ;</span><br><span class="line">        cin &gt;&gt; p-&gt;data ;</span><br><span class="line">        p-&gt;next = HEAD-&gt;next ;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(HEAD-&gt;next)&#123;</span><br><span class="line">            HEAD-&gt;next-&gt;prior = p ;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//i = 0 时，插入第一个元素时，HEAD-&gt;next 为NULL， NULL是没有的，即NULL-&gt;prior是访问不到的，segmentation fault</span></span><br><span class="line">        <span class="comment">//因此当HEAD-&gt;next不为NULL时，才会执行HEAD-&gt;next-&gt;prior = p </span></span><br><span class="line">        <span class="comment">//当HEAD-&gt;next 为NULL，也就是创建第一个结点时，不要让(也没法让)NULL-&gt;prior = p </span></span><br><span class="line"></span><br><span class="line">        HEAD-&gt;next = p ;</span><br><span class="line">        p-&gt;prior = HEAD ;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">GetLength_DL</span><span class="params">(DLList &amp;HEAD)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> length = <span class="number">0</span> ;</span><br><span class="line">    DLNode *p = HEAD-&gt;next;</span><br><span class="line">    <span class="keyword">while</span>(p)&#123;</span><br><span class="line">        length++ ;</span><br><span class="line">        p = p-&gt;next ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> length ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">PrintList_DL</span><span class="params">(DLList &amp;HEAD)</span></span>&#123;</span><br><span class="line">    DLNode *p = HEAD-&gt;next ;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span> ; i &lt; <span class="built_in">GetLength_DL</span>(HEAD) ; i++)&#123;</span><br><span class="line">        cout &lt;&lt; p-&gt;data &lt;&lt; <span class="string">&quot;  &quot;</span> ;</span><br><span class="line">        p = p-&gt;next ;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; endl ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">InsertList_DL</span><span class="params">(DLList &amp;HEAD , <span class="type">int</span> i , <span class="type">int</span> data)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( i &lt; <span class="number">0</span> || i &gt; <span class="built_in">GetLength_DL</span>(HEAD))    &#123;cout &lt;&lt; <span class="string">&quot;the index is invalid&quot;</span> &lt;&lt; endl ; <span class="built_in">exit</span>(<span class="number">0</span>) ;&#125;</span><br><span class="line">    DLNode *p = HEAD ;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span> ; j &lt; i ; j++)&#123;</span><br><span class="line">        p = p-&gt;next ;</span><br><span class="line">    &#125;</span><br><span class="line">    DLNode *s = <span class="keyword">new</span> DLNode ;</span><br><span class="line">    s-&gt;data = data ;</span><br><span class="line">    s-&gt;next = p-&gt;next ;</span><br><span class="line">    <span class="keyword">if</span>(p-&gt;next)&#123;</span><br><span class="line">        p-&gt;next-&gt;prior = s ;</span><br><span class="line">    &#125;</span><br><span class="line">    p-&gt;next = s ;</span><br><span class="line">    s-&gt;prior = p ;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">DeleteElem_DL</span><span class="params">(DLList &amp;HEAD  , <span class="type">int</span> i)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(i &lt; <span class="number">0</span> || i &gt;= <span class="built_in">GetLength_DL</span>(HEAD))    &#123;cout &lt;&lt; <span class="string">&quot;the index is invalid &quot;</span> &lt;&lt; endl ; <span class="built_in">exit</span>(<span class="number">0</span>) ;&#125;</span><br><span class="line">    DLNode *p = HEAD-&gt;next ;</span><br><span class="line">    <span class="keyword">while</span>(i--)&#123;</span><br><span class="line">        p = p-&gt;next ;</span><br><span class="line">    &#125;</span><br><span class="line">    p-&gt;prior-&gt;next = p-&gt;next ;</span><br><span class="line">    p-&gt;next-&gt;prior = p-&gt;prior ;</span><br><span class="line">    <span class="keyword">delete</span> p ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    DLList HEAD ;</span><br><span class="line">    <span class="built_in">InitDLList</span>(HEAD) ;</span><br><span class="line">    <span class="built_in">CreateList_DL</span>(HEAD , <span class="number">6</span>) ;</span><br><span class="line">    <span class="built_in">PrintList_DL</span>(HEAD) ;</span><br><span class="line">    <span class="built_in">InsertList_DL</span>(HEAD , <span class="number">2</span> , <span class="number">821</span>) ;</span><br><span class="line">    <span class="built_in">PrintList_DL</span>(HEAD) ;</span><br><span class="line">    <span class="built_in">DeleteElem_DL</span>(HEAD , <span class="number">1</span>) ;</span><br><span class="line">    <span class="built_in">PrintList_DL</span>(HEAD) ;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="常见bugs"><a href="#常见bugs" class="headerlink" title="常见bugs"></a>常见bugs</h2><ul>
+<li>未考虑<code>NULL</code>的特殊性，执行<code>NULL-&gt;next</code>操作。编译器还不会爆出错误信息，满大街找bug.</li>
+</ul>
+<p><strong>解决方案：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">InsertList_DL</span><span class="params">(DLList &amp;HEAD , <span class="type">int</span> i , <span class="type">int</span> data)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( i &lt; <span class="number">0</span> || i &gt; <span class="built_in">GetLength_DL</span>(HEAD))    &#123;cout &lt;&lt; <span class="string">&quot;the index is invalid&quot;</span> &lt;&lt; endl ; <span class="built_in">exit</span>(<span class="number">0</span>) ;&#125;</span><br><span class="line">    DLNode *p = HEAD ;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span> ; j &lt; i ; j++)&#123;</span><br><span class="line">        p = p-&gt;next ;</span><br><span class="line">    &#125;</span><br><span class="line">    DLNode *s = <span class="keyword">new</span> DLNode ;</span><br><span class="line">    s-&gt;data = data ;</span><br><span class="line">    s-&gt;next = p-&gt;next ;</span><br><span class="line">    <span class="keyword">if</span>(p-&gt;next)&#123;</span><br><span class="line">        p-&gt;next-&gt;prior = s ;</span><br><span class="line">    &#125;<span class="comment">//加入判断p-&gt;next是否为NULL</span></span><br><span class="line">    p-&gt;next = s ;</span><br><span class="line">    s-&gt;prior = p ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="y总的链表算法"><a href="#y总的链表算法" class="headerlink" title="y总的链表算法"></a>y总的链表算法</h2><p>在写AcWing上的题时，发现写的比较吃力。我在想，结构体+指针是否还不是高效的解法，就想着去看看y总的算法，y总提到：</p>
+<ul>
+<li>指针+结构体实现链表一般出现在面试题中，笔试题一般用数组实现链表</li>
+<li><code>new</code>操作太耗时，大数据量时多个<code>new</code>操作可能超时。Acwing单链表那道题，数组模拟链表快10%。</li>
+<li>但用数组模拟链表与动态实现链表相比，空间复杂度更大。</li>
+</ul>
+<h2 id="一些练习题"><a href="#一些练习题" class="headerlink" title="一些练习题"></a>一些练习题</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.acwing.com/activity/content/problem/content/863/">AcWing 826. 单链表 - AcWing</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/829/">827. 双链表 - AcWing题库</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/ba907200/" rel="prev" title="DataStructure">
+                  <i class="fa fa-angle-left"></i> DataStructure
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/3ecf09f5/" rel="next" title="Cpp新知">
+                  Cpp新知 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Benkang Peng</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">98k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">2:59</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">Loading days...</span>
+<span id="times">Loading hours,minutes and seconds...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("10/01/2021 15:00:00"); //此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "The website has been securely running for  "+dnum+"  days ";
+        document.getElementById("times").innerHTML = hnum + " hours " + mnum + " minutes and " + snum + " seconds.";
+    }
+setInterval("createtime()",250);
+
+</script>
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/benkangpeng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.20/fancybox/fancybox.umd.js" integrity="sha256-q8XkJ6dj5VwSvzI8+nATCHHQG+Xv/dAZBCgqmu93zOY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"Me":true,"url":"http://benkangpeng.github.io/posts/14fa845f/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>

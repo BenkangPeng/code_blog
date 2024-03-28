@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.20/fancybox/fancybox.css" integrity="sha256-RvRHGSuWAxZpXKV9lLDt2e+rZ+btzn48Wp4ueS3NZKs=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"benkangpeng.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac","show_result":true},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"rgb(240,55,82)","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Git学习笔记 by 《ProGit》">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git学习笔记">
+<meta property="og:url" content="http://benkangpeng.github.io/posts/a91eaa72/index.html">
+<meta property="og:site_name" content="Benkang Peng">
+<meta property="og:description" content="Git学习笔记 by 《ProGit》">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://git-scm.com/book/en/v2/images/deltas.png">
+<meta property="og:image" content="https://git-scm.com/book/en/v2/images/snapshots.png">
+<meta property="og:image" content="https://git-scm.com/book/en/v2/images/areas.png">
+<meta property="og:image" content="https://git-scm.com/book/en/v2/images/lifecycle.png">
+<meta property="article:published_time" content="2022-10-09T03:30:57.000Z">
+<meta property="article:modified_time" content="2024-03-15T12:39:10.622Z">
+<meta property="article:author" content="Benkang Peng">
+<meta property="article:tag" content="Tools">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://git-scm.com/book/en/v2/images/deltas.png">
+
+
+<link rel="canonical" href="http://benkangpeng.github.io/posts/a91eaa72/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://benkangpeng.github.io/posts/a91eaa72/","path":"posts/a91eaa72/","title":"Git学习笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Git学习笔记 | Benkang Peng</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="Benkang Peng" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Benkang Peng</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Personal Website</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-external-link"><a href="/external-link/" rel="section"><i class="fa fa-external-link fa-fw"></i>External-link</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-me"><a href="/me/index.html" rel="section"><i class="fa fa-code fa-fw"></i>Me</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Git%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">Git设计理念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Git-%E5%9F%BA%E7%A1%80"><span class="nav-number">2.</span> <span class="nav-text">Git 基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Git%E5%B7%A5%E4%BD%9C%E7%8A%B6%E6%80%81"><span class="nav-number">2.1.</span> <span class="nav-text">Git工作状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">Git配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">2.3.</span> <span class="nav-text">Git基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96mannul"><span class="nav-number">2.3.1.</span> <span class="nav-text">获取mannul</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-init"><span class="nav-number">2.3.2.</span> <span class="nav-text">git init</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-status"><span class="nav-number">2.3.3.</span> <span class="nav-text">git status</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gitignore"><span class="nav-number">2.3.4.</span> <span class="nav-text">.gitignore</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-diff"><span class="nav-number">2.3.5.</span> <span class="nav-text">git diff</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-commit"><span class="nav-number">2.3.6.</span> <span class="nav-text">git commit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-rm"><span class="nav-number">2.3.7.</span> <span class="nav-text">git rm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-mv"><span class="nav-number">2.3.8.</span> <span class="nav-text">git mv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-log"><span class="nav-number">2.3.9.</span> <span class="nav-text">git log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-commit-%E2%80%93amend"><span class="nav-number">2.3.10.</span> <span class="nav-text">git commit –amend</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-reset"><span class="nav-number">2.3.11.</span> <span class="nav-text">git reset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%89%88%E6%9C%AC%E5%9B%9E%E6%BA%AF"><span class="nav-number">2.3.12.</span> <span class="nav-text">*文件版本回溯</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E6%96%87%E4%BB%B6%E7%89%88%E6%9C%AC%E5%9B%9E%E6%BA%AF"><span class="nav-number">2.3.13.</span> <span class="nav-text">*单文件版本回溯</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E8%81%94%E5%8A%A8"><span class="nav-number">2.3.14.</span> <span class="nav-text">与远程仓库联动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tag"><span class="nav-number">2.3.15.</span> <span class="nav-text">Tag</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Git%E5%88%86%E6%94%AF"><span class="nav-number">3.</span> <span class="nav-text">Git分支</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git%E7%89%88%E6%9C%AC%E5%9B%9E%E6%BA%AF-by-branch"><span class="nav-number">3.0.1.</span> <span class="nav-text">Git版本回溯(by branch)</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Benkang Peng"
+      src="/images/GNU-Linux-Logo-Penguin-SVG.webp">
+  <p class="site-author-name" itemprop="name">Benkang Peng</p>
+  <div class="site-description" itemprop="description">Stay Hungry,Stay Foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/benkangpeng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;benkangpeng" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:benkangpeng@163.com" title="E-Mail → mailto:benkangpeng@163.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://benkangpeng.github.io/posts/a91eaa72/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/GNU-Linux-Logo-Penguin-SVG.webp">
+      <meta itemprop="name" content="Benkang Peng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Benkang Peng">
+      <meta itemprop="description" content="Stay Hungry,Stay Foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Git学习笔记 | Benkang Peng">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git学习笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>11k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>20 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Git学习笔记 by 《<a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2">ProGit</a>》</p>
+<span id="more"></span>
+
+<h1 id="Git设计理念"><a href="#Git设计理念" class="headerlink" title="Git设计理念"></a>Git设计理念</h1><ul>
+<li><p><strong>Git直接记录快照，而非差异比较</strong></p>
+</li>
+<li><p>基于差异**(Delta-based)** , 像CSV、Subversion、Perforce。它们如何建立新版本：在版本1的基础上，建立一个记录<code>版本2(新版本)</code>与<code>版本1</code>差异的文件，我们称其为$\Delta1$ .当我们需要读取版本2时，可以通过**$版本1 + \Delta1$** 计算得出版本2。</p>
+</li>
+<li><p>Git快照流<strong>，提交后，建立一个新的快照：对</strong>修改过的文件<strong>建立一个新的快照并保存其索引，对</strong>未修改的文件<strong>并不重新存储</strong>，而是<strong>只保留一个链接</strong>指向旧文件</p>
+</li>
+</ul>
+<div class="group-picture"><div class="group-picture-row"><div class="group-picture-column"><img src="https://git-scm.com/book/en/v2/images/deltas.png" alt="基于差异比较"></div><div class="group-picture-column"><img src="https://git-scm.com/book/en/v2/images/snapshots.png" alt="数据流-快照"></div></div></div>
+
+<h1 id="Git-基础"><a href="#Git-基础" class="headerlink" title="Git 基础"></a>Git 基础</h1><h2 id="Git工作状态"><a href="#Git工作状态" class="headerlink" title="Git工作状态"></a>Git工作状态</h2><p><strong>三种状态：</strong><code>已提交(committed)</code>、<code>已修改(modified)</code>、<code>已暂存(staged) </code>, 对应三个阶段：<code>工作区</code>、<code>暂存区</code>、<code>Git目录(仓库)</code>。</p>
+<div class="group-picture"><div class="group-picture-row"><div class="group-picture-column"><img src="https://git-scm.com/book/en/v2/images/areas.png" alt="Git三个阶段"></div><div class="group-picture-column"><img src="https://git-scm.com/book/en/v2/images/lifecycle.png" alt="文件状态变化周期"></div></div></div>
+
+<h2 id="Git配置"><a href="#Git配置" class="headerlink" title="Git配置"></a>Git配置</h2><p>安装Git后添加用户信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;benkangpeng&quot;</span><br><span class="line">git config --global user.email benkangpeng@163.com</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> /c/user/my_project</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git init <span class="comment"># 初始化git</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Git基本操作"><a href="#Git基本操作" class="headerlink" title="Git基本操作"></a>Git基本操作</h2><h3 id="获取mannul"><a href="#获取mannul" class="headerlink" title="获取mannul"></a>获取mannul</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git &lt;verb&gt; -h</span><br></pre></td></tr></table></figure>
+
+<p>ex :  <code>git add -h</code></p>
+<h3 id="git-init"><a href="#git-init" class="headerlink" title="git init"></a>git init</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> /my_project/</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git init</span></span><br></pre></td></tr></table></figure>
+
+<p>初始化Git仓库，此时会在my_project文件夹中生成<code>.git</code>子目录用于存放版本控制文件。注意：<strong>此时还没对项目文件进行跟踪</strong> , 还需要<code>git add</code>跟踪所需文件。</p>
+<p>git add</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git *.c  <span class="comment"># 跟踪所有后缀为.c文件</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git README.md</span></span><br></pre></td></tr></table></figure>
+
+<p><code>git add</code>内涵：</p>
+<p>要暂存这次更新，需要运行 <code>git add</code> 命令。 这是个<strong>多功能</strong>命令：①可以用它开始跟踪新文件，②或者把已跟踪的文件放到暂存区，还能用于合并时把有冲突的文件标记为已解决状态等。 将这个命令理解为“<u>精确地将内容添加到<strong>下一次提交</strong>中</u>”而不是“将一个文件添加到项目中”要更加合适。 </p>
+<h3 id="git-status"><a href="#git-status" class="headerlink" title="git status"></a>git status</h3><p>显示当前文件夹git状况。</p>
+<blockquote>
+<p>On branch master</p>
+<p>No commits yet</p>
+<p>Changes to be committed:<br>  (use “git rm –cached <file>…” to unstage)<br>        new file:   README.md</p>
+<p>Untracked files:<br>  (use “git add <file>…” to include in what will be committed)<br>        CONTRIBUTING.md</p>
+</blockquote>
+<p>如上显示的是，<code>README.md</code>已被跟踪，而<code>CONTRIBUTING.md</code>未被跟踪。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git add CONTRIBUTING.md</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> `My project` &gt; README.md</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git status</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>On branch master</p>
+<p>No commits yet</p>
+<p>Changes to be committed:<br>  (use “git rm –cached <file>…” to unstage)<br>        new file:   CONTRIBUTING.md<br>        new file:   README.md</p>
+<p>Changes not staged for commit:<br>  (use “git add <file>…” to update what will be committed)<br>  (use “git restore <file>…” to discard changes in working directory)<br>        modified:   README.md</p>
+</blockquote>
+<ul>
+<li>此时<code>CONTRIBUTING.md</code>已经被跟踪</li>
+<li>提示有<code>待提交的修改</code> (changes to be committed) ,  <code>CONTRIBUTING.md</code>和<code>README.md</code>没有提交。(至于changes , 即<code>new file</code> , git将<code>创立文件</code>也视为<code>changes</code>)</li>
+<li><code>Changes not staged for commit</code> ： 我们刚才向<code>README,md</code>写入了<code>My project</code> , 但没有将新版本的<code>README.md</code>添加进入暂存区<code>stage</code> 。可执行操作<code>git add README.md</code></li>
+<li>上面这条再一次体现了<code>git add</code>的双重命令，或将其理解为<code>为文件提交(commit)做好预备</code></li>
+</ul>
+<h3 id="gitignore"><a href="#gitignore" class="headerlink" title=".gitignore"></a>.gitignore</h3><p>创建<code>.gitignore</code>文件忽略追踪</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">touch</span> .gitignore</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git add .gitignore</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">You must add .gitignore into the staging area to make it work .</span></span><br></pre></td></tr></table></figure>
+
+<p>常见语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 忽略所有的 .a 文件</span><br><span class="line">*.a</span><br><span class="line"># 但跟踪所有的 lib.a，即便你在前面忽略了 .a 文件</span><br><span class="line">!lib.a</span><br><span class="line"># 只忽略当前目录下的 TODO 文件，而不忽略 subdir/TODO</span><br><span class="line">/TODO</span><br><span class="line"># 忽略任何目录下名为 build 的文件夹</span><br><span class="line">build/</span><br><span class="line"># 忽略 doc/notes.txt，但不忽略 doc/server/arch.txt</span><br><span class="line">doc/*.txt</span><br><span class="line"># 忽略 doc/ 目录及其所有子目录下的 .pdf 文件</span><br><span class="line">doc/**/*.pdf</span><br></pre></td></tr></table></figure>
+
+<h3 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a>git diff</h3><ul>
+<li><p><code>git diff</code> 查看<strong>同一</strong>文件<code>已暂存</code>与<code>未暂存</code>的两个版本的差异</p>
+<p>eg.  在<code>README.md</code>中添加一行<code>哈哈</code> ，no stage ,  使用命令查看:</p>
+</li>
+</ul>
+<blockquote>
+<p>$ git diff README.md<br>diff –git a&#x2F;README.md b&#x2F;README.md<br>index 6fcadd0..b2f8c83 100644<br>— a&#x2F;README.md<br>+++ b&#x2F;README.md<br>@@ -1 +1,3 @@<br>My project~<br>+<br>+哈哈<br>\ No newline at end of file</p>
+</blockquote>
+<ul>
+<li><code>git diff --staged</code> 查看<code>已暂存文件</code>与<code>最后一次提交文件</code>的差异.</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git diff --staged README.md</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="git-commit"><a href="#git-commit" class="headerlink" title="git commit"></a>git commit</h3><p>每次准备提交前，先用 <code>git status</code> 看下，你所需要的文件是不是都<strong>已暂存</strong>起来了， 然后再运行提交命令 <code>git commit</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git commit -m <span class="string">&quot;the first commit&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>-m</code> : 添加提交信息message</p>
+</li>
+<li><p>“the first commit” : 提交的信息，区分每一次提交做了哪些大体的修改</p>
+</li>
+<li><p><code>git commit -a</code>跳过暂存区，直接将为暂存的文件commit .</p>
+</li>
+</ul>
+<h3 id="git-rm"><a href="#git-rm" class="headerlink" title="git rm"></a>git rm</h3><ul>
+<li>如果你想从磁盘根本删除<code>未暂存的文件</code>:</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">rm</span> PROJECT.md</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>从暂存区删除(取消跟踪)文件(仍保存在磁盘里）：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">rm</span> -f PROJECT.md <span class="comment">#-force , 强制删除</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="git-mv"><a href="#git-mv" class="headerlink" title="git mv"></a>git mv</h3><ul>
+<li><code>git mv</code> 移动文件 or 重命名文件。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">mv</span> Project.md PROJECT.md</span></span><br></pre></td></tr></table></figure>
+
+<p>上述命令相当于：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">mv</span> Project.md PROJECT.md</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">rm</span> Project.md <span class="comment"># 从暂存区移除Project.md</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git add PROJECT.md <span class="comment"># 跟踪PROJECT.md</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a>git log</h3><ul>
+<li><code>git log</code> 显示所有提交日志</li>
+<li><code>git log -2</code> 显示最近两条日志</li>
+<li><code>git log -p</code> 按补丁格式显示每个提交引入的差异</li>
+<li><code>git log --pretty=oneline</code>显示格式为一行</li>
+<li>此外还有一些参数过滤日志内容，例如<code>--since``--author</code>等，可查文档。</li>
+</ul>
+<h3 id="git-commit-–amend"><a href="#git-commit-–amend" class="headerlink" title="git commit –amend"></a>git commit –amend</h3><ul>
+<li>提交后发现上一次提交有些许瑕疵，例如message写错了、没有跟踪上某个文件 ，但又不想再一次提交，想覆盖上一次提交。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git commit --amend -m <span class="string">&quot;the right message&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="git-reset"><a href="#git-reset" class="headerlink" title="git reset"></a>git reset</h3><ul>
+<li>强制重置(删除)某个commit, 例如<code>git reset --hard HEAD~1</code>删除上一次提交。</li>
+<li>取消暂存的文件，例如将<code>CONTRIBUTING.md</code>文件取出&#96;&#96;stageing area<code>,</code>git reset HEAD CONTRIBUTING.md&#96;</li>
+</ul>
+<h3 id="文件版本回溯"><a href="#文件版本回溯" class="headerlink" title="*文件版本回溯"></a>*文件版本回溯</h3><p>案例：<code>commit log</code>如下，自从<code>git clone</code>以来，我提交了<code>version 1</code>和<code>version2</code>.整个项目只有两个文件：<code>check.md</code>和<code>README.md</code>. 我现在想将<code>check.md</code>还原到<code>version 1</code>的状态，但<code>README.md</code>不用还原。(可以理解为我后知后觉意识到<code>version2</code>中对<code>check.md</code>的修改是错误的。)</p>
+<blockquote>
+<p>$ git log –pretty&#x3D;oneline<br>bc03ee1185c084b514ff44a9520ab5d29777b600 (HEAD) version2<br>3d44a28a78ffba2eab8d0718e34c3f7463cfa2a1 version 1<br>86d413d821c361c0245859fddd9c6258f698f16f (tag: v1.0, origin&#x2F;main, origin&#x2F;HEAD) colle<br>ct some ways to github<br>1bfa40c95f5b2a5a086421889e60321ef056fbc0 (tag: v0.1) the first commit by git push<br>a41ee579c6756e653d380b2e08426ea74f77841d (tag: v0.0) Create README.md</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git reset 3d44a  <span class="comment"># 3d44a是version1的效验码，没写完整</span></span></span><br><span class="line">Unstaged changes after reset:</span><br><span class="line">M       README.md</span><br><span class="line">M       check.md</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">到version1后,本地文件是没有发生变化的(仍是version2的snapshot),因此会提示`unstaged changes</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git status</span></span><br><span class="line">HEAD detached from 86d413d</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line">        modified:   README.md</span><br><span class="line">        modified:   check.md</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如何恢复check.md，上面的信息也提示我们了“git restore &lt;file&gt;”</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git restore check.md &amp;&amp; git add README.md</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">log</span> --pretty=oneline</span></span><br><span class="line">3d44a28a78ffba2eab8d0718e34c3f7463cfa2a1 (HEAD) version 1</span><br><span class="line">86d413d821c361c0245859fddd9c6258f698f16f (tag: v1.0, origin/main, origin/HEAD) colle</span><br><span class="line">ct some ways to github</span><br><span class="line">1bfa40c95f5b2a5a086421889e60321ef056fbc0 (tag: v0.1) the first commit by git push</span><br><span class="line">a41ee579c6756e653d380b2e08426ea74f77841d (tag: v0.0) Create README.md</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">END</span></span><br></pre></td></tr></table></figure>
+
+<p><del>但以上做法删除了version2的提交信息。是否存在方法，只进行单个文件的版本回溯呢？现在还没解决……</del></p>
+<h3 id="单文件版本回溯"><a href="#单文件版本回溯" class="headerlink" title="*单文件版本回溯"></a>*单文件版本回溯</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">log</span> --pretty=oneline</span></span><br><span class="line">05bfc3c25ca3ee80247f3ec24b4936d2d7e7d2c1 (HEAD) version3</span><br><span class="line">245a8ddd0c2bfc01c2444930e2ed11b04320d354 version2</span><br><span class="line">3d44a28a78ffba2eab8d0718e34c3f7463cfa2a1 version 1</span><br><span class="line">86d413d821c361c0245859fddd9c6258f698f16f (tag: v1.0, origin/main, origin/HEAD) colle</span><br><span class="line">ct some ways to github</span><br><span class="line">1bfa40c95f5b2a5a086421889e60321ef056fbc0 (tag: v0.1) the first commit by git push</span><br><span class="line">a41ee579c6756e653d380b2e08426ea74f77841d (tag: v0.0) Create README.md</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>将<code>check.md</code>回溯到版本1，其他文件不变，<code>git checkout &lt;hash&gt; check.md</code></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git checkout 3d44a28a check.md</span></span><br><span class="line">Updated 1 path from aab7394</span><br></pre></td></tr></table></figure>
+
+<h3 id="与远程仓库联动"><a href="#与远程仓库联动" class="headerlink" title="与远程仓库联动"></a>与远程仓库联动</h3><ul>
+<li><code>git remote add &lt;name&gt; &lt;url&gt;</code> 添加远程仓库，例如<code>git remote add getback https://github.com/BenkangPeng/GetBack.git</code> , 之后可用名称<code>getback</code>代替网址进行操作。类似于<code>C</code>里的<code>#define</code></li>
+<li><code>git remote -v</code>显示已添加的远程仓库, <code>git remote</code>简略显示。</li>
+<li><code>git remote rename name1 name2</code> 修改仓库<strong>代称</strong>，实际远程仓库(比如Github上的仓库）名称没被修改。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git remote add getback https://github.com/BenkangPeng/GetBack.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git remote -v</span></span><br><span class="line">getback https://github.com/BenkangPeng/GetBack.git (fetch)</span><br><span class="line">getback https://github.com/BenkangPeng/GetBack.git (push)</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git remote rename getback GetBack</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git remote</span></span><br><span class="line">GetBack</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>git fetch</code> 获取仓库的更新。例如，你在1年以前<code>clone</code>了仓库<code>A</code> , 但在过去一年内，仓库<code>A</code>其他开源贡献者提交了许多内容，甚至产生了分支，<code>git fetch &lt;url&gt;</code>将仓库<code>A</code>的这些更新数据下载到本地，但不会改变本地状态：<strong>不会自动合并分支或修改你当前的工作</strong>。当然你可以手动合并分支、更新本地仓库。</li>
+<li><code>git clone &lt;url&gt;</code>克隆仓库。将<code>&lt;url&gt;</code>对应的仓库克隆到本地，与<code>git fetch</code>不同的是，它将覆盖本地工作。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/BenkangPeng/GetBack.git</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> GetBack/</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git remote -v</span></span><br><span class="line">origin  https://github.com/BenkangPeng/GetBack.git (fetch)</span><br><span class="line">origin  https://github.com/BenkangPeng/GetBack.git (push)</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">克隆完仓库后，git会自动创建一个origin的远程仓库，对应的就是克隆的仓库url</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">对GetBack进行修改……</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git push origin main</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">将本地的main分支(主支)提交到远程仓库origin</span></span><br></pre></td></tr></table></figure>
+
+<p>关于<code>主分支</code> <code>master</code>改为<code>main</code>，还颇有意味。<a target="_blank" rel="noopener" href="https://github.com/github/renaming">github&#x2F;renaming</a>        <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/257179306">乐子 on 知乎</a></p>
+<h3 id="Tag"><a href="#Tag" class="headerlink" title="Tag"></a>Tag</h3><ul>
+<li><code>git tag -a &lt;v1.0&gt; -m &quot;version 1.0&quot;</code> 添加<code>annotated tag</code> , <code>git tag v1.0</code>添加<code>lightweight</code>标签。</li>
+<li><code>git tag</code>显示所有标签，<code>git show &lt;v1.0&gt; </code>显示某个标签信息</li>
+<li><code>git tag &lt;version&gt; &lt;verify code&gt;</code>为之前某一次<code>commit</code>补充<code>tag</code></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">log</span> --pretty=oneline</span></span><br><span class="line">dd0a36aec54a58a9f3427f5f33b1ee97802949b0 (HEAD -&gt; master, tag: v1.0) </span><br><span class="line">3d4057629e1e3515667c7e826817a9ab5a29f306 the second commit</span><br><span class="line">349775b9754e9113e549a9d734707bff38f2e3b4 the first commit</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git tag v0.0 34977</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>默认情况下，<code>git push</code>不会顺带将每一个<code>commit</code> 的<code>tag</code>提交，需手动设置。<code>git push origin &lt;tagname&gt;</code>上传单个<code>tag</code>  ,  <code>git push origin --tags </code>推送所有<code>tags</code></li>
+<li><code>git tag -d &lt;tagname&gt;</code>删除标签，但不会删除远程仓库(&#96;&#96;remote<code>)的</code>tags<code> , 需用</code>git push origin –delete <tagname>&#96;</li>
+</ul>
+<h1 id="Git分支"><a href="#Git分支" class="headerlink" title="Git分支"></a>Git分支</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git branch testing	<span class="comment">#创立分支testing</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git checkout testing  <span class="comment">#切换到testing</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">以上两条命令可合并为 git checkout -b testing</span> </span><br><span class="line">Switched to branch &#x27;testing&#x27;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="keyword">do</span> some changes</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git checkout main  <span class="comment">#回到主分支</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git branch <span class="comment">#显示所有分支</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>git merge &lt;branch&gt;</code></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">touch</span> polynorminal.cpp</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">edit polynorminal.cpp</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git add polynorminal.cpp</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git commit -m <span class="string">&quot;touch a new .cpp file&quot;</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git checkout -b AddFunc2</span></span><br><span class="line">Switched to a new branch &#x27;AddFunc2&#x27;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">edit polynorminal.cpp</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git commit -a -m <span class="string">&quot;have added the func2&quot;</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git checkout main</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git merge AddFunc2</span></span><br><span class="line">Updating 87ba74e..869b2a7</span><br><span class="line">Fast-forward</span><br><span class="line"> polynorminal.cpp | 11 ++++++++++-</span><br><span class="line"> 1 file changed, 10 insertions(+), 1 deletion(-)</span><br></pre></td></tr></table></figure>
+
+<div class="note info"><p>在<code>main</code>中合并分支时，可能出现合并冲突，这是因为分支中文件修改过大，<code>git</code>不知道如何将<code>main</code>与<code>branch</code>两个文件版本合并，此时需手动合并、修改文件，并<code>commit</code></p>
+</div>
+
+<ul>
+<li><code>git branch -d &lt;branch&gt;</code>删除分支（但不能删除未合并的分支）</li>
+<li><code>git branch --no-merged</code>查看未合并的分支</li>
+</ul>
+<h3 id="Git版本回溯-by-branch"><a href="#Git版本回溯-by-branch" class="headerlink" title="Git版本回溯(by branch)"></a>Git版本回溯(by branch)</h3><p>我一直是用<code>git reset --hard &lt;hash_id&gt;</code>进行版本回溯，但这样会丢失之后的commit，导致版本混乱。现在想到一个方法，可以用分支来进行回溯查看。(当然，如果我们确定要回到某个commit重新工作，并确定要丢失之后的commit，也可以硬重置。)</p>
+<p><strong>查看当前分支</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">log</span> --oneline --decorate --graph --all</span></span><br><span class="line">* a1ebf62 (master) c2b91</span><br><span class="line">| * 831fee6 (testing) 87ab2</span><br><span class="line">|/</span><br><span class="line">* 8a4b1b7 f30ab</span><br><span class="line">* cd426be 34ac2</span><br><span class="line">* d922070 98ca9</span><br><span class="line">* e339fae 完成稠密</span><br><span class="line">| * bfbf7ce (HEAD -&gt; sparse) sparse v1.0</span><br><span class="line">| * eb62cc0 完成主体</span><br><span class="line">|/</span><br><span class="line">* b6a6d16 3rd commit</span><br><span class="line">* f64efae 2nd commit</span><br><span class="line">* 8bd0d82 1st commit</span><br></pre></td></tr></table></figure>
+
+<p>现在我们正在<code>sparse</code>分支上，因为改动较大，想回到稠密版本上查看稠密版本的源码：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git checkout -b check_dense_version e339fae</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">= git branch check_dense_version e339fae &amp;&amp; git checkout check_denser_version</span></span><br><span class="line">Switched to a new branch &#x27;check_dense_version&#x27;</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">log</span> --oneline --decorate --graph --all</span></span><br><span class="line">* a1ebf62 (master) c2b91</span><br><span class="line">| * 831fee6 (testing) 87ab2</span><br><span class="line">|/</span><br><span class="line">* 8a4b1b7 f30ab</span><br><span class="line">* cd426be 34ac2</span><br><span class="line">* d922070 98ca9</span><br><span class="line">* e339fae (HEAD -&gt; check_dense_version) 完成稠密</span><br><span class="line">| * bfbf7ce (sparse) sparse v1.0</span><br><span class="line">| * eb62cc0 完成主体</span><br><span class="line">|/</span><br><span class="line">* b6a6d16 3rd commit</span><br><span class="line">* f64efae 2nd commit</span><br><span class="line">* 8bd0d82 1st commit</span><br></pre></td></tr></table></figure>
+
+<p>这时整个工作目录的文件都变成了<code>e3319fae</code>时的版本。在这个版本下，如果我们运行代码导致一些文件发生了修改，工作目录不干净，是不能直接<code>switch</code>回<code>sparse</code>的：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git switch sparse</span> </span><br><span class="line">error: Your local changes to the following files would be overwritten by checkout:</span><br><span class="line">        a.txt</span><br><span class="line">Please commit your changes or stash them before you switch branches.</span><br><span class="line">Aborting</span><br></pre></td></tr></table></figure>
+
+<p>提示显示如果我们要更换分支，需要<code>commit</code> 或者<code>stash</code></p>
+<ul>
+<li>如果我们不需要提交，可以将文件变更取消掉，再<code>switch</code></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git restore .  <span class="comment">#将所有被修改的文件复原</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git switch sparse</span> </span><br><span class="line">Switched to branch &#x27;sparse&#x27;</span><br><span class="line">* a1ebf62 (master) c2b91</span><br><span class="line">| * 831fee6 (testing) 87ab2</span><br><span class="line">|/</span><br><span class="line">* 8a4b1b7 f30ab</span><br><span class="line">* cd426be 34ac2</span><br><span class="line">* d922070 98ca9</span><br><span class="line">* e339fae (check_dense_version) 完成稠密</span><br><span class="line">| * bfbf7ce (HEAD -&gt; sparse) sparse v1.0</span><br><span class="line">| * eb62cc0 完成主体</span><br><span class="line">|/</span><br><span class="line">* b6a6d16 3rd commit</span><br><span class="line">* f64efae 2nd commit</span><br><span class="line">* 8bd0d82 1st commit</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>git stash</code></strong></p>
+<p>如果我们在<code>sparse</code>分支下工作目录有修改未提交，那么切换分支之前需要将修改存入<code>stash</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">log</span> --oneline --decorate --graph --all</span></span><br><span class="line">* a1ebf62 (master) c2b91</span><br><span class="line">* 8a4b1b7 f30ab</span><br><span class="line">* cd426be 34ac2</span><br><span class="line">* d922070 98ca9</span><br><span class="line">* e339fae 完成稠密</span><br><span class="line">| * bfbf7ce (HEAD -&gt; sparse) sparse v1.0</span><br><span class="line">| * eb62cc0 完成主体</span><br><span class="line">|/</span><br><span class="line">* b6a6d16 3rd commit</span><br><span class="line">* f64efae 2nd commit</span><br><span class="line">* 8bd0d82 1st commit</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git branch temp e339fae</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git switch temp</span></span><br><span class="line">error: Your local changes to the following files would be overwritten by checkout:</span><br><span class="line">        a.txt</span><br><span class="line">Please commit your changes or stash them before you switch branches.</span><br><span class="line">Aborting</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">log</span> --oneline --decorate --graph --all</span></span><br><span class="line">* a1ebf62 (master) c2b91</span><br><span class="line">* 8a4b1b7 f30ab</span><br><span class="line">* cd426be 34ac2</span><br><span class="line">* d922070 98ca9</span><br><span class="line">* e339fae (temp) 完成稠密</span><br><span class="line">| * bfbf7ce (HEAD -&gt; sparse) sparse v1.0</span><br><span class="line">| * eb62cc0 完成主体</span><br><span class="line">|/</span><br><span class="line">* b6a6d16 3rd commit</span><br><span class="line">* f64efae 2nd commit</span><br><span class="line">* 8bd0d82 1st commit</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git stash save <span class="string">&quot;uncommit modify in sparse&quot;</span></span></span><br><span class="line">Saved working directory and index state On sparse: uncommit modify in sparse</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git switch temp</span></span><br><span class="line">Switched to branch &#x27;temp&#x27;</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git switch sparse</span> </span><br><span class="line">Switched to branch &#x27;sparse&#x27;</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git stash list</span></span><br><span class="line">stash@&#123;0&#125;: On sparse: uncommit modify in sparse</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git stash pop 0</span></span><br><span class="line">On branch sparse</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line">        modified:   a.txt</span><br><span class="line"></span><br><span class="line">no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</span><br><span class="line">Dropped refs/stash@&#123;0&#125; (6679d6d8daf8a44c45d289fe82c7aab9a5430eb0)</span><br></pre></td></tr></table></figure>
+
+<p><strong>git stash相关命令</strong></p>
+<ol>
+<li><code>git stash save [message]</code>：将当前工作目录的修改保存到一个stash列表中，并附带一条可选的描述信息。</li>
+<li><code>git stash list</code>：列出所有的stash列表。</li>
+<li><code>git stash apply [stash_id]</code>：将指定的stash应用到当前工作目录，但不从stash列表中删除。</li>
+<li><code>git stash pop [stash_id]</code>：将指定的stash应用到当前工作目录，并从stash列表中删除。</li>
+<li><code>git stash drop [stash_id]</code>：从stash列表中删除指定的stash。</li>
+<li><code>git stash branch [branch_name] [stash_id]</code>：基于指定的stash创建一个新的分支，并将stash应用到新分支上。</li>
+<li><code>git stash pop --index [stash_id]</code>：将指定的stash应用到当前工作目录和索引（暂存区），并从stash列表中删除</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Tools/" rel="tag"><i class="fa fa-tag"></i> Tools</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/c3711ab9/" rel="prev" title="shell笔记">
+                  <i class="fa fa-angle-left"></i> shell笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/a06a32e/" rel="next" title="Gdb学习笔记">
+                  Gdb学习笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Benkang Peng</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">98k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">2:59</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">Loading days...</span>
+<span id="times">Loading hours,minutes and seconds...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("10/01/2021 15:00:00"); //此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "The website has been securely running for  "+dnum+"  days ";
+        document.getElementById("times").innerHTML = hnum + " hours " + mnum + " minutes and " + snum + " seconds.";
+    }
+setInterval("createtime()",250);
+
+</script>
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/benkangpeng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.20/fancybox/fancybox.umd.js" integrity="sha256-q8XkJ6dj5VwSvzI8+nATCHHQG+Xv/dAZBCgqmu93zOY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":false,"delay":true,"timeout":3000,"priority":true,"Me":true,"url":"http://benkangpeng.github.io/posts/a91eaa72/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>
